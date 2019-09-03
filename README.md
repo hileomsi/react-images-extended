@@ -13,16 +13,16 @@ I needed something like jossmac's react-images but with extended features like z
 
 
 ```bash
-npm install --save react-images-extended
+npm install --save react-trilogo-images
 ```
 or
 ```bash
-yarn add react-images-extended
+yarn add react-trilogo-images
 ```
 
 ```jsx
 import React from 'react';
-import Lightbox from 'react-images';
+import Lightbox from 'react-trilogo-images';
 
 export default class Sample extends React.Component {
   ...

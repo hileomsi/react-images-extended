@@ -1319,13 +1319,15 @@ var Lightbox = function (_Component) {
 			if (!canUseDom) return;
 
 			if (this.props.isOpen && nextProps.isOpen) {
-				this.preloadImage(this.props.currentImage);
+				this.preloadImage(this.props.currentImage, nextProps);
 			}
 
 			// preload current image
 			if (this.props.currentImage !== nextProps.currentImage || !this.props.isOpen && nextProps.isOpen) {
-				var img = this.preloadImage(nextProps.currentImage);
-				this.setState({ imageLoaded: img.complete });
+				var img = this.preloadImage(nextProps.currentImage, nextProps);
+				if (img && img.complete) {
+					this.setState({ imageLoaded: img.complete });
+				}
 			}
 
 			// add/remove event listeners
@@ -1483,10 +1485,10 @@ var Lightbox = function (_Component) {
 		}
 	}, {
 		key: 'preloadImage',
-		value: function preloadImage(idx) {
+		value: function preloadImage(idx, nextProps) {
 			var _this2 = this;
 
-			var data = this.props.images[idx];
+			var data = nextProps ? nextProps.images[idx] : this.props.images[idx];
 
 			if (!data) return;
 

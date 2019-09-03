@@ -85,13 +85,15 @@ class Lightbox extends Component {
 		if (!canUseDom) return;
 
 		if (this.props.isOpen && nextProps.isOpen) {
-			this.preloadImage(this.props.currentImage);
+			this.preloadImage(this.props.currentImage, nextProps);
 		}
 
 		// preload current image
 		if (this.props.currentImage !== nextProps.currentImage || !this.props.isOpen && nextProps.isOpen) {
-			const img = this.preloadImage(nextProps.currentImage);
-			this.setState({ imageLoaded: img.complete });
+			const img = this.preloadImage(nextProps.currentImage, nextProps);
+			if (img && img.complete) {
+				this.setState({ imageLoaded: img.complete });
+			}
 		}
 
 		// add/remove event listeners
@@ -233,8 +235,8 @@ class Lightbox extends Component {
 		});
 	}
 
-	preloadImage (idx) {
-		const data = this.props.images[idx];
+	preloadImage (idx, nextProps) {
+		const data = nextProps ? nextProps.images[idx] : this.props.images[idx];
 
 		if (!data) return;
 
